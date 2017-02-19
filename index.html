@@ -2,18 +2,171 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>Image Viewer</title>
+    <!-- Insert this line above script imports  -->
+    <script>
+      if (typeof module === 'object') {
+        window.module = module;
+        module = undefined;
+      }
+    </script>
+    <script src="./jquery-3.1.1.slim.js"></script>
+    <!-- Insert this line after script imports -->
+    <script>
+      if (window.module) {
+        module = window.module;
+      }
+    </script>
+    <style>
+      .options{
+        height: 185px;
+        width: 310px;
+      }
+      .optionImages{
+        height: inherit;
+        width: inherit;
+      }
+      .imageContent{
+        margin-top: 4%;
+        height: 355px;
+        margin-left: 8%;
+        margin-right: 5%;
+        margin-bottom: 3%;
+        width: 652px;
+      }
+      .imagesView{
+        height: inherit;
+        width: inherit;
+      }
+    </style>
   </head>
   <body>
-    <h1>Hello World!</h1>
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-    We are using Node.js <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
+    <div id="homepage" style="display:block">
+      <div id="backgroundImage" style="display:block; position:fixed; margin-top:-10px; margin-left:-10px">
+        <img src="./images/background.jpg" alt="Welcome to mage viewer" height="600" width="850">
+      </div>
+      <div id="welcomeWindow" style="position:absolute; width:94%; margin:5%; height:83%">
+        <h2 style="text-align:center; color:white">Welcome to Image Viewer</h2>
+        <div id="options">
+          <div>
+              <div id="option1" class="options" style="display:inline">
+                <img src="./images/cars/car1.jpg" alt="Cars" height="185px" width="310px" class="optionImages">
+              </div>
+              <div id="option2" class="options" style="display:inline; margin-left:60px">
+                <img src="./images/guns/gun1.jpg" alt="Guns" height="185px" width="310px" class="optionImages">
+              </div>
+          </div>
+          <div style="margin-top:15px">
+            <div id="option3" class="options" style="display:inline">
+              <img src="./images/ships/ship1.jpg" alt="Ships" height="185px" width="310px" class="optionImages">
+            </div>
+            <div id="option4" class="options" style="display:inline; margin-left:60px">
+              <img src="./images/planes/plane1.jpg" alt="Planes" height="185px" width="310px" class="optionImages">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="imageWindow" style="display:none; position: absolute; width: 100%; margin-left: -1%">
+        <h2 id="imageCategoryName" style="color:white; text-align: center"></h2>
+        <div id="buttons" style="margin:5%">
+          <input type="button" value="Previous" id="previousClick" style="width:100px; margin-left:8%; background: #B0C4DE">
+          <input type="button" value="Back" id="backClick" style="width:100px; margin-left:20%; background: #B0C4DE">
+          <input type="button" value="Next" id="nextClick" style="width:100px; margin-left:18%; background: #B0C4DE">
+        </div>
+        <div id="imageContent" class="imageContent">
+          <img src="./images/cars/car1.jpg" id="showImage" class="imagesView">
+        </div>
+    </div>
   </body>
 
   <script>
     // You can also require other files to run in this process
     require('./renderer.js')
+    $(document).ready(function () {
+      var imageCategory = null;
+      var imageNumber = null;
+      var imagePrefix = null;
+      
+      // on mouse over the particular image class bring up border
+      $( ".optionImages" ).mouseover(function(ev, el) {
+        this.style.border = 'solid';
+        this.style.borderColor = 'azure';
+        this.style.borderWidth = '5px';
+      });
+      
+      // on remove border on mouse out
+      $( ".optionImages" ).mouseout(function(ev, el) {
+        this.style.border = 'none';
+      });
+      
+      // on select a particular class of image route to particular image folder
+      $(".optionImages").click(function () {
+        var option = this.closest('div') && (this.closest('div')).getAttribute('id');
+        switch (option) {
+          case 'option1': {
+            imageCategory = 'cars';
+            imagePrefix = 'car';
+            break;
+          }
+          case 'option2': {
+            imageCategory = 'guns';
+            imagePrefix = 'gun';
+            break;
+          }            
+          case 'option3': {
+            imageCategory = 'ships';
+            imagePrefix = 'ship';
+            break;
+          }            
+          case 'option4': {
+            imageCategory = 'planes';
+            imagePrefix = 'plane';
+            break;
+          }            
+          default: imageCategory = null;
+          break;
+        }
+        imageCategory && loadImageCategory();
+      });
+
+      // load the images from particular folder
+      var loadImageCategory = function () {
+        document.getElementById('welcomeWindow').style.display = 'none';
+        document.getElementById('imageWindow').style.display = 'block';
+        document.getElementById('imageCategoryName').innerHTML = imageCategory;
+        loadImages();
+      };
+
+      // loads the particular Image
+      var loadImages = function () {
+        if(imageNumber === null || imageNumber > 4 || imageNumber < 1) {
+          imageNumber = 1;
+        }
+        document.getElementById('showImage').src = './images/' + imageCategory + '/' + imagePrefix + imageNumber + '.jpg';
+      };
+
+      // user clicks on previous
+      $('#previousClick').click( function () {
+        imageNumber--;
+        loadImages();
+      });
+
+      // user clicks on previous
+      $('#nextClick').click( function () {
+        imageNumber++;
+        loadImages();
+      });
+
+      // user clicks on back
+      $('#backClick').click( function () {
+        imageCategory = null;
+        imageNumber = null;
+        imagePrefix = null;
+        document.getElementById('imageCategoryName').innerHTML = null;
+        document.getElementById('welcomeWindow').style.display = 'block';
+        document.getElementById('imageWindow').style.display = 'none';
+      });
+    });
   </script>
 </html>
