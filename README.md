@@ -2,17 +2,17 @@
 This application demonstrates the building of application with electronjs
 
 ## Getting started:
-Get the sample electronjs app from the repository:
-https://github.com/electron/electron-quick-start
-Follow the steps on the repository
--1. Clone this repository 
-git clone https://github.com/electron/electron-quick-start
--2. Go into the repository
-cd electron-quick-start
--3. Install dependencies
-npm install
--4. Run the app
-npm start
+Get the sample electronjs app from the repository: <br />
+https://github.com/electron/electron-quick-start <br />
+Follow the steps on the repository <br />
+1. Clone this repository 
+**git clone https://github.com/electron/electron-quick-start** <br />
+2. Go into the repository
+**cd electron-quick-start** <br />
+3. Install dependencies
+**npm install** <br />
+4. Run the app
+**npm start**
 
 ## Building the application:
 Build the application using the web technologies and the nodejs frameworks. <br />
@@ -37,8 +37,8 @@ electron-packager . --overwrite --platform=darwin --arch=x64 --icon=images/treeI
 electron-packager . --overwrite --platform=linux --arch=x64 --icon=images/treeIcon.png --prune=true --out=release-builds
 
 ### Troubles with packaging:
--1. If your development environment is windows, then the packaging of applications must be done in admin mode. But due to its file system not supporting symbolic links, it is recommended not to package the mac or linux packages on windows platform. Workarounds are available in the community support.
--2. If your development environment is linux, then packaging for linux and MAC will be seamless. To transfer the application via USB, the USB must be formatted to a file system that supports symbolic links. Or else the file packaged release can be compressed to a tar file to export.
-But, buiding the windows packages will give missing additional module support. Workarounds are available, though building the windows package on windows environment would be easy.
+1. If your development environment is windows, then the packaging of applications must be done in admin mode. But due to its file system not supporting symbolic links, it is recommended not to package the mac or linux packages on windows platform. Workarounds are available in the community support.<br />
+2. If your development environment is linux, then packaging for linux and MAC will be seamless. To transfer the application via USB, the USB must be formatted to a file system that supports symbolic links. Or else the file packaged release can be compressed to a tar file to export.
+But, buiding the windows packages will give missing additional module support. Workarounds are available, though building the windows package on windows environment would be easy.<br />
 
 
