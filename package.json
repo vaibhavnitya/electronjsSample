@@ -18,5 +18,8 @@
   "license": "",
   "devDependencies": {
     "electron": "^1.4.1"
+  },
+  "dependencies": {
+    "electron-packager": "^8.5.1"
   }
 }
